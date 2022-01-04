@@ -1,11 +1,17 @@
 from peewee import *
 from init import DB_NAME, DB_USERNAME, DB_PASS
 
-try:
-    db = PostgresqlDatabase(DB_NAME, user=DB_USERNAME, password=DB_PASS)
-except ConnectionError:
-    pass
+db = PostgresqlDatabase(DB_NAME, user=DB_USERNAME, password=DB_PASS)
 
+#Test connection
+try:
+    db.connect()
+except OperationalError:
+    import os
+    from init import PATH
+    print('Removed configuration, restart application!')
+    os.remove(f'{PATH}\\config.ini')
+    
 #Model
 class BaseModel(Model):
     class Meta:
