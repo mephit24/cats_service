@@ -10,7 +10,7 @@ except OperationalError:
     import os
     from init import PATH
     os.remove(f'{PATH}\\config.ini')
-    print('Removed configuration, restart application!')
+    print('Configuration removed, restart application!')
     
 #Model
 class BaseModel(Model):
@@ -46,4 +46,3 @@ class Cats_stat(BaseModel):
     class Meta:
         table_name = 'cats_stat'
         primary_key = False
-      

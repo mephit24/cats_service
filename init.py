@@ -4,14 +4,14 @@ import getpass
 
 PATH, _ = os.path.split(os.path.abspath(__file__))  #Get path to script
 
-    #Get base name and username
+    #Get DB name and username
 if not os.path.exists(f'{PATH}\\config.ini'):
     DB_NAME = input('Enter name of database: ')
     DB_USERNAME = input('Enter username: ')
     #Get password and save it to store
     DB_PASS = getpass.getpass(prompt = 'Enter password: ')
     keyring.set_password('systemname', 'username', DB_PASS)
-    #Save basename and username to file
+    #Save DB name and username to file
     with open(f'{PATH}\\config.ini', 'w', encoding='UTF-8') as config:
         config.write(f'DB_NAME={DB_NAME}\nDB_USERNAME={DB_USERNAME}')
 else:
