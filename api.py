@@ -1,5 +1,6 @@
 from orm_model import *
 import json
+from recount_statistic import recount_statistic
 
 #response for /cats
 def get_cats_json(limit=None, offset=None):
@@ -18,6 +19,7 @@ def create_cat(json_of_cat):
             whiskers = json_of_cat["whiskers_length"],
             ).execute()
         db.close()
+        recount_statistic()
         return "OK"
     except IntegrityError:
         db.close()
@@ -25,4 +27,3 @@ def create_cat(json_of_cat):
     except DataError:
         db.close()
         return "incorrect"
-    

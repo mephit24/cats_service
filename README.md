@@ -1,6 +1,6 @@
 For start application:
-  Run webserver: "path\uvicorn.exe" main:app
-  Run to recount statistic: app.py
+  
+  Run: python3 webserv.py
 
 
 
