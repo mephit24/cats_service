@@ -11,7 +11,7 @@ def test_db_connection():
     except OperationalError:
         import os
         from init import PATH
-        os.remove(f'{PATH}\\config.ini')
+        os.remove(f'{PATH}/config.ini') # Move to init.
         
 
 #Model
