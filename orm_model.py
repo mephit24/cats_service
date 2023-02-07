@@ -1,7 +1,7 @@
 from peewee import *
-from init import DB_NAME, DB_USERNAME, DB_PASS
+from init import DB_HOST, DB_NAME, DB_USERNAME, DB_PASS
 
-db = PostgresqlDatabase(DB_NAME, user=DB_USERNAME, password=DB_PASS)
+db = PostgresqlDatabase(DB_NAME, host=DB_HOST, user=DB_USERNAME, password=DB_PASS)
 
 #Test connection
 def test_db_connection():
@@ -9,9 +9,7 @@ def test_db_connection():
         db.connect()
         return True
     except OperationalError:
-        import os
-        from init import PATH
-        os.remove(f'{PATH}/config.ini') # Move to init.
+        print('Database not available. Check it exist and credientals in config.ini, then restart app.')
         
 
 #Model
