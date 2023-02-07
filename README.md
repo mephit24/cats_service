@@ -1,13 +1,33 @@
-For start application:
+The application is realisation test task for job interview.  
+Description task is below.
+
+## For start application:
+
+* Go to app directory:
+  + *cd /path/to/app*
+* Run only for first time:
+  + *python3 -m pip install -r requirements.txt*
+* Run:
+  + *python3 webserv.py*
+* Open url [http://localhost:8080/ping] in your internet broswer. 
+## For start application in Docker:
+
+* Install Docker and docker-compose:  
+[https://docs.docker.com/engine/install]  
+[https://docs.docker.com/compose/install]
+* Go to app directory:
+  + *cd /path/to/app*
+* Run: 
+  + *docker-compose build*
+  + *docker-compose up*   
+  (Application will be run on forwarded to your host 8081 port.)
+* Open url [http://localhost:8081/ping] in your internet broswer.  
   
-  Run: python3 webserv.py
 
+## Task description:
+---
 
-
-
-Task description below:
-
-# Тестовое задание WG Forge (Backend)
+### Тестовое задание WG Forge (Backend)
 
 Тестовое задание можно выполнить на любом языке программирования из списка:
 - Python 3

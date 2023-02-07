@@ -1,8 +1,9 @@
-from orm_model import *
 import json
+
+from orm_model import *
 from recount_statistic import recount_statistic
 
-#response for /cats
+# Response for /cats
 def get_cats_json(limit=None, offset=None, attribute=None, order=None): # TODO: need order by desc
     sort_attrs = {'name': Cats.catname,
                 'color': Cats.catcolor,
@@ -18,7 +19,7 @@ def get_cats_json(limit=None, offset=None, attribute=None, order=None): # TODO: 
         cats.append(cat)
     return cats
 
-#create new cat on /cat
+# Create new cat on /cat
 def create_cat(json_of_cat):
     json_of_cat = json.loads(json_of_cat)
     try:
@@ -32,7 +33,7 @@ def create_cat(json_of_cat):
         return "OK"
     except IntegrityError:
         db.close()
-        return "existing"
+        return "Cat already exist"
     except DataError:
         db.close()
-        return "incorrect"
+        return "incorrect data"
