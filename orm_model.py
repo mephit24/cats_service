@@ -1,18 +1,19 @@
 from peewee import *
-from init import DB_HOST, DB_NAME, DB_USERNAME, DB_PASS
+# import keyring
+from init import db_args_last
 
-db = PostgresqlDatabase(DB_NAME, host=DB_HOST, user=DB_USERNAME, password=DB_PASS)
+db = PostgresqlDatabase(**db_args_last)
 
-#Test connection
+# Test connection
 def test_db_connection():
     try:
         db.connect()
         return True
     except OperationalError:
-        print('Database not available. Check it exist and credientals in config.ini, then restart app.')
+        print("Database not available. Check credientals in config.json or start application with arguments (--help)")
         
 
-#Model
+# Model
 class BaseModel(Model):
     class Meta:
         database = db

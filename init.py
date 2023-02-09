@@ -1,23 +1,34 @@
 import os
 import keyring
-import getpass
+import argparse
+import json
 
-PATH, _ = os.path.split(os.path.abspath(__file__))  # Get path to script
+argparse_ = argparse.ArgumentParser()
+argparse_.add_argument('--host')
+argparse_.add_argument('--database')
+argparse_.add_argument('--user')
+# argparse_.add_argument('--password')
+db_args_new = vars(argparse_.parse_args())
 
-    # Get DB name and username TODO: use configparser
-if not os.path.exists(f'{PATH}/config.ini'): # TODO: use pathlib
-    DB_HOST = input('Enter host: ')
-    DB_NAME = input('Enter name of database: ')
-    DB_USERNAME = input('Enter username: ')
-    # Get password and save it to store
-    DB_PASS = getpass.getpass(prompt = 'Enter password: ')
-    keyring.set_password('systemname', 'username', DB_PASS)
-    # Save DB name and username to file
-    with open(f'{PATH}/config.ini', 'w', encoding='UTF-8') as config:
-        config.write(f'DB_HOST={DB_HOST}\nDB_NAME={DB_NAME}\nDB_USERNAME={DB_USERNAME}')
-else:
-    with open(f'{PATH}/config.ini', 'r', encoding='UTF-8') as config:
-        DB_HOST = config.readline().rstrip().lstrip('DB_HOST=')
-        DB_NAME = config.readline().rstrip().lstrip('DB_NAME=')
-        DB_USERNAME = config.readline().rstrip().lstrip('DB_USERNAME=')
-        DB_PASS = config.readline().rstrip().lstrip('DB_PASS=') # keyring.get_password('systemname', 'username')
+PATH, _ = os.path.split(os.path.abspath(__file__)) # TODO: use pathlib
+db_args_default = {'database': 'db'}
+
+if not os.path.exists(f'{PATH}/config.json'):
+    with open(f'{PATH}/config.json', 'w', encoding='UTF-8') as config:
+        config.write(db_args_default)
+
+try:
+    with open(f'{PATH}/config.json', 'r', encoding='UTF-8') as config:
+        db_args_last = json.load(config)
+        for val in db_args_new:
+            if db_args_new[val]:
+                db_args_last[val] = db_args_new[val]
+except json.decoder.JSONDecodeError:
+    print('Configuration file corruted.')
+    db_args_last = db_args_default
+finally:    
+    with open(f'{PATH}/config.json', 'w', encoding='UTF-8') as config:
+        config.write(json.dumps(db_args_last))
+
+### TODO: security keeping password
+#keyring.set_password('systemname', 'username', DB_PASS)
