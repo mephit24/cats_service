@@ -1,8 +1,8 @@
 from peewee import *
-# import keyring
+import keyring
 from init import db_args_last
 
-db = PostgresqlDatabase(**db_args_last)
+db = PostgresqlDatabase(**db_args_last, password=keyring.get_password('cats_service', 'user'))
 
 # Test connection
 def test_db_connection():
