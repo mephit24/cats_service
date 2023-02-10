@@ -1,11 +1,11 @@
 from typing import Union
-import uvicorn
+
 from fastapi import FastAPI, Request
 from pydantic.types import PositiveInt
 
-from orm_model import test_db_connection
 from recount_statistic import recount_statistic
 from api import get_cats_json, create_cat
+
 
 app = FastAPI()
 
@@ -28,8 +28,3 @@ async def create_new_cat(a: Request):
 @app.get("/recount") # TODO: need request limiter
 async def recount():
     return recount_statistic()
-
-if __name__ == "__main__":
-    if test_db_connection():
-        recount_statistic()
-        uvicorn.run("webserv:app", host="0.0.0.0", port=8080, log_level="info")
